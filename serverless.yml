@@ -1,0 +1,30 @@
+service: candidate-service
+#app: your-app-name
+#tenant: your-tenant-name
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ap-northeast-1
+
+# パッケージとは？
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  memoSubmission:
+    handler: memo.submit
+    memorySize: 128
+    events:
+      - http:
+          path: memo
+          method: post
+          # Serverless FrameworkでCORS有効化したAPI Gatewayの作成
+          # https://blog.serverworks.co.jp/tech/2019/05/14/post-70323/
