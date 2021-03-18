@@ -1,4 +1,4 @@
-service: candidate-service
+service: memo-service
 #app: your-app-name
 #tenant: your-tenant-name
 
@@ -7,7 +7,16 @@ provider:
   runtime: nodejs12.x
   stage: dev
   region: ap-northeast-1
-
+  environment:
+    MEMO_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "*"
 # パッケージとは？
 # you can add packaging information here
 #package:
@@ -26,5 +35,30 @@ functions:
       - http:
           path: memo
           method: post
-          # Serverless FrameworkでCORS有効化したAPI Gatewayの作成
-          # https://blog.serverworks.co.jp/tech/2019/05/14/post-70323/
+  listMemos:
+    handler: memo.listMemos
+    memorySize: 128
+    events:
+      - http:
+          path: memo
+          method: get
+resources:
+  Resources:
+    MemoDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: "id"
+            AttributeType: "S"   
+        KeySchema:
+          -
+            AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 3
+          WriteCapacityUnits: 3
+        StreamSpecification:
+          StreamViewType: "NEW_AND_OLD_IMAGES"
+        TableName: ${self:provider.environment.MEMO_TABLE}

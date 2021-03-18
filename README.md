@@ -2,16 +2,23 @@
 
 ### private
 
-API Keyを要求するか。別途providerでapiKeysを作成する。
+`true`とするとAPI Keyが必要になる。別途providerでapiKeysを作成する。
 
 https://fujiyasu.hatenablog.com/entry/2016/10/02/232824
 
+## APIコール時に必須パラメーターをチェックしたい
+
+https://qiita.com/picapica/items/1a47847d3beb689a5740
 
 # 参考
 
 - [【公式】POST出来るAPIの実装例](https://www.serverless.com/blog/node-rest-api-with-serverless-lambda-and-dynamodb)
 
 
+
+## hello,world
+
+https://github.com/kensukegoto/sls-example
 ---
 
 
