@@ -1,5 +1,13 @@
 const AWS = require('aws-sdk');
-const dynamodb= new AWS.DynamoDB();
+const dynamodb= new AWS.DynamoDB({
+  endpoint: "http://localhost:8000"
+});
+const s3 = new AWS.S3({
+  accessKeyId: 'S3RVER', // This specific key is required when working offline
+  secretAccessKey: 'S3RVER',
+  endpoint: new AWS.Endpoint('http://localhost:9090'),
+  s3ForcePathStyle: true
+})
 
 module.exports.submit = async (event, context, callback) => {
 
@@ -24,11 +32,21 @@ module.exports.submit = async (event, context, callback) => {
 
     await dynamodb.putItem(params).promise();
 
+    const destparams = {
+      Bucket: 'local-bucket',
+      // Key: `${String(id)}.txt`,
+      // Body: memo,
+      // ContentType: " text/plain"
+    };
+
+    const r = await s3.listObjects(destparams).promise(); 
+
 
     callback(null,{
       statusCode: 200,
       body: JSON.stringify({
         message: 'Success !!',
+        r
       }),
     })
 
@@ -50,10 +68,12 @@ module.exports.listMemos = async (event, context, callback) => {
 
     const res = await dynamodb.scan(params).promise();
 
+    console.log(res)
+
     callback(null,{
       statusCode: 200,
       body: JSON.stringify({
-        items: res.items
+        items: res.Items
       }),
     })
 

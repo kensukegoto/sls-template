@@ -1,0 +1,19 @@
+{
+  "name": "serverless-framework-master",
+  "version": "1.0.0",
+  "description": "### private",
+  "main": "memo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dynamodb-admin": "^4.0.1",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-offline": "^6.8.0",
+    "serverless-s3-local": "^0.6.7",
+    "sls-dev-tools": "^1.1.15"
+  }
+}

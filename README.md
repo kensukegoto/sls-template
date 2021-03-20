@@ -1,3 +1,25 @@
+## 使い方
+
+serverless offlineを起動
+
+```
+sls offline
+```
+
+dynamo localを起動する
+
+```
+sls dynamodb start
+```
+
+同時に起動するには？
+
+```
+
+```
+
+GUIを導入する
+
 ## function
 
 ### private
@@ -10,9 +32,35 @@ https://fujiyasu.hatenablog.com/entry/2016/10/02/232824
 
 https://qiita.com/picapica/items/1a47847d3beb689a5740
 
-# 参考
+## Dynamo
 
+### Dynamo localインストール
+
+コードをビルドしないでもlambdaが動くので待つ煩わしさが無くなる
+
+### 参考
+
+- [s3-localの実装例とそれを叩くコマンド](https://github.com/ar90n/serverless-s3-local/tree/master/example)
 - [【公式】POST出来るAPIの実装例](https://www.serverless.com/blog/node-rest-api-with-serverless-lambda-and-dynamodb)
+- [serverless framework + TypeScript +DynamoDB のローカル環境](https://zenn.dev/maruware/articles/cac0052812c2e3293dd5)
+- [Serverless アプリケーションをローカルで開発する](https://qiita.com/noralife/items/e36621ddd0e5b8ff4447)
+- [【エラー解消】DynamoDB Local is not available for stage: dev](https://github.com/99x/serverless-dynamodb-local/issues/225)
+- [【公式】Serverless Offline](https://www.serverless.com/plugins/serverless-offline)
+- [DynamoDB Localの開発を便利にするdyanmodb-adminを導入する](https://tech-broccoli.life/articles/engineer/add-dynamodb-admin-for-sls/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

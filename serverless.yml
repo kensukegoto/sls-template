@@ -2,6 +2,7 @@ service: memo-service
 #app: your-app-name
 #tenant: your-tenant-name
 
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -17,6 +18,32 @@ provider:
         - dynamodb:GetItem
         - dynamodb:PutItem
       Resource: "*"
+
+plugins: 
+ - serverless-dynamodb-local
+ - serverless-offline
+ - serverless-s3-local
+
+custom:
+  s3:
+    host: localhost
+    port: 9090
+    directory: ./s3-local
+    accessKeyId: 'S3RVER'
+    secretAccessKey: 'S3RVER'
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      development:
+        sources:
+          - table: ${self:provider.environment.MEMO_TABLE}
+            sources: [./migrations/memo.json]
 # パッケージとは？
 # you can add packaging information here
 #package:
@@ -44,6 +71,10 @@ functions:
           method: get
 resources:
   Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: local-bucket
     MemoDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
